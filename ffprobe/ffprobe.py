@@ -27,10 +27,11 @@ class FFProbe:
 		except:
 			raise IOError('ffprobe not found.')			
 		if os.path.isfile(video_file):
+			# Doesn't work on linux based systems if we don't quote the path
 			if str(platform.system())=='Windows':
 				cmd=["ffprobe","-show_streams",self.video_file]
 			else:
-				cmd=["ffprobe -show_streams "+pipes.quote(self.video_file)]
+				cmd=["ffprobe -show_streams " + pipes.quote(self.video_file)]
 
 			p = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,shell=True)
 			self.format=None
